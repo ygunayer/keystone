@@ -139,3 +139,78 @@
 		display: none;
 	}
 }
+
+
+// input
+.RelationshipSelect__input {
+	// override elemental's transition to catch the width or it looks weird
+	.transition( all 0.15s ease-in-out );
+	.placeholder(@link-color);
+	background: transparent;
+	border-color: transparent;
+	box-shadow: none;
+
+	// set the width to only be as long as if it were a button initially
+	// this is updated on focus to a more comfortable typing length
+	width: 33%;
+
+	// decorate the input as a link
+	&:hover {
+		.placeholder(@link-hover-color);
+		border-color: transparent;
+		cursor: pointer;
+
+		// handle placeholder text
+		&::-moz-placeholder { text-decoration: underline; }
+		&:-ms-input-placeholder { text-decoration: underline; }
+		&::-webkit-input-placeholder  { text-decoration: underline; }
+	}
+
+	// return the input to it's natural appearance on focus
+	&:focus {
+		.placeholder(@input-placeholder-color);
+		background: white;
+		border-color: @input-border-color-focus;
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px fade(@input-border-color-focus, 10%);
+		cursor: auto;
+		outline: 0;
+		width: 100%;
+
+		// handle placeholder text
+		&::-moz-placeholder { text-decoration: none; }
+		&:-ms-input-placeholder { text-decoration: none; }
+		&::-webkit-input-placeholder  { text-decoration: none; }
+	}
+}
+
+
+// menu
+.RelationshipSelect__menu {
+	background-color: @dropdown-bg;
+	border-radius: @border-radius-base;
+	box-shadow: 0 0 0 1px rgba(0,0,0,.175), 0 3px 8px rgba(0,0,0,.175);
+	margin-top: 2px;
+	max-height: 240px;
+	overflow-y: auto;
+	padding: 5px 0;
+	position: absolute;
+	top: 100%;
+	width: 100%;
+	z-index: 2;
+}
+.RelationshipSelect__menu__item {
+	background: none;
+	border: none;
+	cursor: pointer;
+	display: block;
+	padding: 5px 10px;
+	outline: none;
+	text-align: left;
+	width: 100%;
+
+	&:hover,
+	&:focus {
+		background-color: fade(@app-primary, 10%);
+		color: @app-primary;
+	}
+}
