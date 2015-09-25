@@ -3,7 +3,7 @@ var React = require('react'),
 	Note = require('../../components/Note');
 
 module.exports = Field.create({
-	
+
 	shouldCollapse: function() {
 		return this.props.collapse && !this.hasExisting();
 	},
@@ -103,7 +103,7 @@ module.exports = Field.create({
 		if (this.hasFile() && !this.state.removeExisting) {
 			values = (
 				<div className='file-values'>
-					<div className='field-value'>{this.getFilename()}</div>
+					<a href={this.getFilename()} target='_blank' className='field-value'>{this.getFilename()}</a>
 				</div>
 			);
 		}
@@ -124,7 +124,7 @@ module.exports = Field.create({
 				</div>
 			);
 		} else if (this.state.origin === 'cloudinary') {
-			return ( 
+			return (
 				<div className='select-queued pull-left'>
 					<div className='alert alert-success'>File selected from Cloudinary</div>
 				</div>
@@ -209,10 +209,10 @@ module.exports = Field.create({
 		return (
 			<div className='field field-type-localfile'>
 				<label className='field-label'>{this.props.label}</label>
-	
+
 				{this.renderFileField()}
 				{this.renderFileAction()}
-	
+
 				<div className={fieldClassName}>
 					<div className='file-container'>{container}</div>
 					{body}
@@ -221,5 +221,5 @@ module.exports = Field.create({
 			</div>
 		);
 	}
-	
+
 });
