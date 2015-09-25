@@ -103,7 +103,7 @@ module.exports = Field.create({
 		if (this.hasFile() && !this.state.removeExisting) {
 			values = (
 				<div className='file-values'>
-					<a href={this.getFilename()} target='_blank' className='field-value'>{this.getFilename()}</a>
+					<a href={this.getFileSource()} target='_blank' className='field-value'>{this.getFileSource()}</a>
 				</div>
 			);
 		}
