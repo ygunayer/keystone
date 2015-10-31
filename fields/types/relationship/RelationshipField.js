@@ -2,9 +2,9 @@ import React from 'react';
 import Field from '../Field';
 import RelationshipSelect from '../../components/RelationshipSelect';
 import RelationshipSingle from '../../components/RelationshipSingle';
-import ItemsTableCell from '../../../admin/src/components/ItemsTableCell';
-import ItemsTableValue from '../../../admin/src/components/ItemsTableValue';
-import ListControl from '../../../admin/src/components/ListControl';
+import ItemsTableCell from '../../../admin/client/components/ItemsTableCell';
+import ItemsTableValue from '../../../admin/client/components/ItemsTableValue';
+import ListControl from '../../../admin/client/components/ListControl';
 import { Button, Checkbox, FormField, FormInput, FormNote, FormRow, Pill, Table } from 'elemental';
 
 function arrToObj(arr) {
@@ -17,8 +17,6 @@ function arrToObj(arr) {
 
 const RELATED_ITEMS = [
 	{ label: 'Amazon',             value: 'amazon' },
-	{ label: 'Arnold',             value: 'arnold' },
-	{ label: 'Disrupt',            value: 'disrupt' },
 	{ label: 'Ebay',               value: 'ebay' },
 	{ label: 'Google',             value: 'google' },
 	{ label: 'Jaze',               value: 'jaze' },
@@ -26,8 +24,7 @@ const RELATED_ITEMS = [
 	{ label: 'Molomby Consulting', value: 'molomby_consulting' },
 	{ label: 'Prismatik',          value: 'prismatik' },
 	{ label: 'Sweathers',          value: 'sweathers' },
-	{ label: 'Team9',              value: 'team9' },
-	{ label: 'The Means',          value: 'the_means' },
+	{ label: 'Team 9',             value: 'team9' },
 	{ label: 'Thinkmill',          value: 'thinkmill' },
 	{ label: 'Twitter',            value: 'twitter' },
 	{ label: 'Yahoo',              value: 'yahoo' },
