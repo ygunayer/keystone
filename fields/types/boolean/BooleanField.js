@@ -1,6 +1,7 @@
 import React from 'react';
 import Field from '../Field';
-import { Checkbox, FormField, FormNote } from 'elemental';
+import Checkbox from '../../../admin/client/components/Checkbox';
+import { FormField, FormNote } from 'elemental';
 
 module.exports = Field.create({
 
@@ -15,10 +16,10 @@ module.exports = Field.create({
 		value: React.PropTypes.bool,
 	},
 
-	valueChanged (event) {
+	valueChanged (value) {
 		this.props.onChange({
 			path: this.props.path,
-			value: event.target.checked
+			value: value
 		});
 	},
 
@@ -27,25 +28,24 @@ module.exports = Field.create({
 		return <FormNote note={this.props.note} />;
 	},
 
+	renderFormInput () {
+		if (!this.shouldRenderField()) return;
+		return <input type="hidden" name={this.props.path} value={this.props.value ? 'true' : 'false'} />;
+	},
+
+	renderCheckbox () {
+		if (!this.shouldRenderField()) return <Checkbox readonly checked={this.props.value} />;
+		return <Checkbox checked={this.props.value} onChange={this.valueChanged} />;
+	},
+
 	renderUI () {
-		var input;
-		if (this.shouldRenderField()) {
-			input = (
-				<Checkbox label={this.props.label} name={this.props.path} checked={this.props.value} onChange={this.valueChanged} />
-			);
-		} else {
-			var state = this.props.value ? 'checked' : 'unchecked';
-			var imgSrc = '/keystone/images/icons/16/checkbox-' + state + '.png';
-			input = (
-				<div>
-					<img src={imgSrc} width='16' height='16' className={state} style={{ marginRight: 5 }} />
-					<span>{this.props.label}</span>
-				</div>
-			);
-		}
 		return (
 			<FormField offsetAbsentLabel={this.props.indent} className="field-type-boolean">
-				{input}
+				<label style={{ height: '2.3em' }}>
+					{this.renderFormInput()}
+					{this.renderCheckbox()}
+					<span style={{ marginLeft: '.75em' }}>{this.props.label}</span>
+				</label>
 				{this.renderNote()}
 			</FormField>
 		);

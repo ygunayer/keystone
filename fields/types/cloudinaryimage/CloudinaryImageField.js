@@ -4,7 +4,7 @@ import React from 'react';
 import Field from '../Field';
 import Select from 'react-select';
 import { Button, FormField, FormInput, FormNote } from 'elemental';
-import Lightbox from '../../../admin/src/components/Lightbox';
+import Lightbox from '../../../admin/client/components/Lightbox';
 
 /**
  * TODO:
@@ -298,7 +298,7 @@ module.exports = Field.create({
 	renderImageToolbar () {
 		return (
 			<div key={this.props.path + '_toolbar'} className="image-toolbar">
-				<div className='u-float-left'>
+				<div className="u-float-left">
 					<Button onClick={this.changeImage}>
 						{this.hasImage() ? 'Change' : 'Upload'} Image
 					</Button>

@@ -24,7 +24,7 @@ var moduleRoot = (function(_rootPath) {
  * @api public
  */
 var Keystone = function() {
-	grappling.mixin(this).allowHooks('pre:routes', 'pre:render', 'updates', 'signout', 'signin');
+	grappling.mixin(this).allowHooks('pre:static', 'pre:bodyparser', 'pre:session', 'pre:routes', 'pre:render', 'updates', 'signout', 'signin');
 	this.lists = {};
 	this.paths = {};
 	this._options = {
@@ -104,33 +104,21 @@ Keystone.prototype.prefixModel = function (key) {
 };
 
 /* Attach core functionality to Keystone.prototype */
-Keystone.prototype.bindEmailTestRoutes = require('./lib/core/bindEmailTestRoutes');
-Keystone.prototype.connect = require('./lib/core/connect');
 Keystone.prototype.createItems = require('./lib/core/createItems');
 Keystone.prototype.getOrphanedLists = require('./lib/core/getOrphanedLists');
 Keystone.prototype.importer = require('./lib/core/importer');
 Keystone.prototype.init = require('./lib/core/init');
+Keystone.prototype.initDatabase = require('./lib/core/initDatabase');
+Keystone.prototype.initExpressSession = require('./lib/core/initExpressSession');
 Keystone.prototype.initNav = require('./lib/core/initNav');
 Keystone.prototype.list = require('./lib/core/list');
-Keystone.prototype.mount = require('./lib/core/mount');
+Keystone.prototype.openDatabaseConnection = require('./lib/core/openDatabaseConnection');
 Keystone.prototype.populateRelated = require('./lib/core/populateRelated');
 Keystone.prototype.redirect = require('./lib/core/redirect');
 Keystone.prototype.render = require('./lib/core/render');
-Keystone.prototype.routes = require('./lib/core/routes');
 Keystone.prototype.start = require('./lib/core/start');
 Keystone.prototype.wrapHTMLError = require('./lib/core/wrapHTMLError');
 
-/* Expose Admin UI App */
-Keystone.prototype.adminApp = {
-	staticRouter: require('./admin/app/static')
-};
-
-/* Legacy Attach Mechanisms */
-Keystone.prototype.static = function(app) {
-	if (!this.get('headless')) {
-		app.use('/keystone', Keystone.prototype.adminApp.staticRouter);
-	}
-};
 
 /**
  * The exports object is an instance of Keystone.
@@ -140,6 +128,9 @@ Keystone.prototype.static = function(app) {
 var keystone = module.exports = exports = new Keystone();
 
 // Expose modules and Classes
+keystone.Admin = {
+	Server: require('./admin/server')
+};
 keystone.Email = require('./lib/email');
 keystone.Field = require('./fields/types/Type');
 keystone.Field.Types = require('./lib/fieldTypes');
