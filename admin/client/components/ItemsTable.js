@@ -1,9 +1,5 @@
 import React from 'react';
-import classnames from 'classnames';
 
-import Columns from '../columns';
-import CurrentListStore from '../stores/CurrentListStore';
-import ListControl from './ListControl';
 import TableRow from './ItemsTableRow';
 import DrapDrop from './ItemsTableDragDrop';
 
@@ -43,12 +39,7 @@ const ItemsTable = React.createClass({
 		let { items, list } = this.props;
 		if (!items.results.length) return null;
 
-		let currentPage = CurrentListStore.getCurrentPage();
-		let pageSize = CurrentListStore.getPageSize();
-
-		let totalPages = Math.ceil(items.count / pageSize);
-
-		let tableBody = (this.props.list.sortable) ? (
+		let tableBody = (list.sortable) ? (
 			<DrapDrop { ...this.props } />
 		) : (
 			<tbody >
