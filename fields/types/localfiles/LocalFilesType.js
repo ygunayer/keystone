@@ -83,6 +83,7 @@ localfiles.prototype.addToSchema = function() {
 		originalname:	this._path.append('.originalname'),
 		size:			this._path.append('.size'),
 		filetype:		this._path.append('.filetype'),
+		prefix:		this._path.append('.prefix'),
 		// virtuals
 		exists:			this._path.append('.exists'),
 		upload:			this._path.append('_upload'),
@@ -95,7 +96,8 @@ localfiles.prototype.addToSchema = function() {
 		originalname:	String,
 		path:			String,
 		size:			Number,
-		filetype:		String
+		filetype:		String,
+		prefix: String
 	});
 
 	// The .href virtual returns the public path of the file
@@ -311,7 +313,8 @@ localfiles.prototype.uploadFiles = function(item, files, update, callback) {
 					originalname: file.originalname,
 					path: field.options.dest,
 					size: file.size,
-					filetype: filetype
+					filetype: filetype,
+					prefix: field.options.prefix
 				};
 
 				if (update) {

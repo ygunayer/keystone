@@ -21,7 +21,18 @@ var Item = React.createClass({
 
 		var body = [];
 
-		body.push(<img className='file-icon' src={'/keystone/images/icons/32/' + iconName + '.png'} />);
+		var fileType = 'file';
+		if (this.props.filetype) {
+			if (this.props.filetype.indexOf('image/') == 0) {
+				fileType = 'image';
+			}
+		}
+		var url = (this.props.prefix || '').replace(/\/+$/) + '/' + (this.props.filename || '').replace(/^\/+/);
+		if (fileType == 'image') {
+			body.push(<img className='file-image' src={url} />);
+		} else {
+			body.push(<img className='file-icon' src={'/keystone/images/icons/32/' + iconName + '.png'} />);
+		}
 		body.push(<span className='file-filename'>{filename}</span>);
 
 		if (this.props.size) {

@@ -1,6 +1,7 @@
 var React = require('react'),
 	Field = require('../Field'),
-	Note = require('../../components/Note');
+	Note = require('../../components/Note'),
+	loadPreviewImage = require('../../utils/loadPreviewImage');
 
 module.exports = Field.create({
 	
@@ -43,8 +44,12 @@ module.exports = Field.create({
 	},
 
 	fileChanged: function (event) {//eslint-disable-line no-unused-vars
-		this.setState({
-			origin: 'local'
+		var that = this;
+		async.map(event.target.files || [], loadPreviewImage, function(err, results) {
+			that.setState({
+				origin: 'local',
+				selectedFiles: results
+			});
 		});
 	},
 
@@ -101,17 +106,54 @@ module.exports = Field.create({
 		var values = null;
 
 		if (this.hasFile() && !this.state.removeExisting) {
-			values = (
-				<div className='file-values'>
-					<div className='field-value'>{this.getFilename()}</div>
-				</div>
-			);
+			var fileType = 'file';
+			var item = this.props.value;
+			if (item && item.filetype && item.filetype.indexOf('image/') == 0) {
+				fileType = 'image';
+			}
+
+			if (fileType == 'image') {
+				var url = (item.prefix || '').replace(/\/+$/) + '/' + (item.filename || '').replace(/^\/+/);
+				values = (
+					<div className='file-values'>
+						<img className='file-image' src={url} />
+						<div className='file-filename'>{item.filename}</div>
+					</div>
+				);
+			} else {
+				values = (
+					<div className='file-values'>
+						<div className='field-value'>{item.filename}</div>
+					</div>
+				);
+			}
 		}
 
 		return (
 			<div key={this.props.path + '_details'} className='file-details'>
 				{values}
 				{add}
+			</div>
+		);
+	},
+
+	renderSelectedFiles: function() {
+		var files = this.state.selectedFiles.map(function(file) {
+			var img = null;
+			if (file.previewImage) {
+				img = (<img className='file-image' src={file.previewImage && file.previewImage.result} />);
+			}
+			return (
+				<div className='file-values'>
+					{img}
+					<div className='file-filename'>{file.item.name}</div>
+				</div>
+			);
+		});
+		return (
+			<div key={this.props.path + '_selected'} className='file-details'>
+				<p>Following file(s) will be uploaded:</p>
+				{files}
 			</div>
 		);
 	},
@@ -204,6 +246,10 @@ module.exports = Field.create({
 			} else {
 				container.push(<div className='help-block'>no file</div>);
 			}
+		}
+
+		if (this.hasLocal()) {
+			container.push(this.renderSelectedFiles());
 		}
 
 		return (

@@ -80,6 +80,7 @@ localfile.prototype.addToSchema = function() {
 		path:			this._path.append('.path'),
 		size:			this._path.append('.size'),
 		filetype:		this._path.append('.filetype'),
+		prefix:		this._path.append('.prefix'),
 		// virtuals
 		exists:			this._path.append('.exists'),
 		href:			this._path.append('.href'),
@@ -92,7 +93,8 @@ localfile.prototype.addToSchema = function() {
 		originalname:   String,
 		path:			String,
 		size:			Number,
-		filetype:		String
+		filetype:		String,
+		prefix: String
 	});
 	
 	schema.add(schemaPaths);
@@ -279,7 +281,8 @@ localfile.prototype.uploadFile = function(item, file, update, callback) {
 				originalname: file.originalname,
 				path: field.options.dest,
 				size: file.size,
-				filetype: filetype
+				filetype: filetype,
+				prefix: field.options.prefix
 			};
 
 			if (update) {
