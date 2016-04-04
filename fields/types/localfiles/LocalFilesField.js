@@ -19,7 +19,7 @@ var Item = React.createClass({
 		var iconName = '_blank';
 		if (_.contains(ICON_EXTS, ext)) iconName = ext;
 
-		var body = [];
+		var thumbnail = null, body = [];
 
 		var fileType = 'file';
 		if (this.props.filetype) {
@@ -29,10 +29,11 @@ var Item = React.createClass({
 		}
 		var url = (this.props.prefix || '').replace(/\/+$/) + '/' + (this.props.filename || '').replace(/^\/+/);
 		if (fileType == 'image') {
-			body.push(<img className='file-image' src={url} />);
+			thumbnail = <img className='file-image' src={url} />;
 		} else {
-			body.push(<img className='file-icon' src={'/keystone/images/icons/32/' + iconName + '.png'} />);
+			thumbnail = <img className='file-icon' src={'/keystone/images/icons/32/' + iconName + '.png'} />;
 		}
+
 		body.push(<span className='file-filename'>{filename}</span>);
 
 		if (this.props.size) {
@@ -50,10 +51,17 @@ var Item = React.createClass({
 			body.push(<span className='file-action' onClick={this.props.toggleDelete}>{actionLabel}</span>);
 		}
 
-		var itemClassName = 'file-item';
+		var itemClassName = 'file-item clearfix';
 		if (this.props.deleted) itemClassName += ' file-item-deleted';
 
-		return <div className={itemClassName} key={this.props.key}>{body}</div>;
+		return (
+			<div className={itemClassName} key={this.props.key}>
+				{thumbnail}
+				<div className='file-summary'>
+					{body}
+				</div>
+			</div>
+		);
 	}
 	
 });
