@@ -269,15 +269,28 @@ cloudinaryimage.prototype.addToSchema = function() {
 	this.bindUnderscoreMethods();
 };
 
-
 /**
  * Formats the field value
+ *
+ * Delegates to the options.format function if it exists.
+ * @api public
+ */
+cloudinaryimage.prototype.format = function(item) {
+	if (this.hasFormatter()) {
+		return this.options.format.call(this, item);
+	}
+	return item.get(this.paths.url);
+};
+
+
+/**
+ * Detects whether the field has formatter function
  *
  * @api public
  */
 
-cloudinaryimage.prototype.format = function(item) {
-	return item.get(this.paths.url);
+cloudinaryimage.prototype.hasFormatter = function() {
+	return 'function' === typeof this.options.format;
 };
 
 

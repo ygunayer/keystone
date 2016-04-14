@@ -39,7 +39,7 @@ mixin column(list, col, item)
 			+column_link(value, item.get(col.path), true)
 		else if col.type == 'color'
 			+column_color(value)
-		else if col.type == 'localfile'
+		else if col.type == 'localfile' || col.type == 'cloudinaryimage'
 			+column_html(value)
 		else
 			+column_basic(value)
